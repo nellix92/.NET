@@ -1,0 +1,55 @@
+﻿<h2>@Titolo</h2>
+<button class="btn btn-primary mb-4"
+        @onclick="OnCrea">
+    Crea Evento
+</button>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Località</th>
+            <th>Data</th>
+            <th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var evento in ListaElementi)
+        {
+            <tr>
+                <td>@evento.Id</td>
+                <td>@evento.Nome</td>
+                <td>@evento.Localita</td>
+                <td>@evento.Data</td>
+                <td>
+                    <button class="btn btn-warning"
+                            @onclick="e => OnModifica.InvokeAsync(evento)">
+                        Modifica
+                    </button>
+                    <button class="btn btn-danger"
+                            @onclick="e => OnElimina.InvokeAsync(evento)">
+                        Elimina
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+
+    [Parameter]
+    public string Titolo { get; set; } = "Lista Eventi";
+
+    [Parameter]
+    public List<ElementoListaEventi> ListaElementi { get; set; }
+
+    [Parameter]
+    public EventCallback OnCrea { get; set; }
+
+    [Parameter]
+    public EventCallback<ElementoListaEventi> OnModifica { get; set; }
+
+    [Parameter]
+    public EventCallback<ElementoListaEventi> OnElimina { get; set; }
+}
